@@ -6,6 +6,10 @@ def on_message(client, userdata, message):
     print("Message qos: ", message.qos)
     print("Message topic: ", message.topic)
 
+def on_log(client, userdata, level, buf):
+    print("log: ",buf)
+
+
 broker = "localhost"
 client = mqtt.Client("client-1")
 print("Creating client instance")
@@ -13,6 +17,7 @@ print("Creating client instance")
 client.connect(broker)
 print("Connected to the broker")
 client.on_message = on_message
+client.on_log = on_log
 
 client.loop_start()
 client.subscribe("home/bulb")
