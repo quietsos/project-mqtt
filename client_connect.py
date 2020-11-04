@@ -1,32 +1,23 @@
-import paho.mqtt.client as mqtt
-import paho.mqtt.client as paho
+import paho.mqtt.client as mqtt #import the client
 import time
 
-def on_message(client, userdata, message):
-    print("Message received= ",str(message.payload.decode("utf-8")))
-    print("Message topic= ",message.topic)
-    print("Message qos= ", message.qos)
-    
+def on_connect(client,userdata,flags,rc):
+    if rc == 0:
+        print("Connected ok.",rc)
+    else:
+        print("Bad connection...",rc)
+
+broker = "192.168.0.104"
+
+client = mqtt.Client("Room-1") # creating new client instance
+client.on_connect = on_connect #callback function for checking the is stublished or not
+client.connect(broker)  # connect client to the broker
+print("Connecting to the broker: ", broker)
 
 
-broker = "localhost" #select broker define
-
-client = paho.Client(client_id = "1", clean_session=True)  # connect to the broker
-
-client.on_message = on_message #callback on_message function fo retain message from the broker
-
-# client.connect(broker,1883, 60)
-
-if client.connect(broker,1883,60) == 0: #connecting to the broker
-    print("Connected... to:", broker)
-else:
-    print("Connection problem!")
-
-client.loop_start()     # start the loop
-client.subscribe("house/bulb") # subscribe a topic
-client.publish("house/bulb", input("Enter publish message: "),1) # pblish a topic with a message
-time.sleep(4)  # wait 
-client.loop_stop() #stop loop
-
-
-
+client.loop_start() # start loop
+client.subscribe("house/light") # subscribe to published topic
+client.publish("house/light","ON") # published topic and message to the broker
+time.sleep(4) #time delay of start loop
+client.loop_stop() # stop loop
+client.disconnect() #disconnect client from the broker connection

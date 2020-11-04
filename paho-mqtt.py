@@ -201,3 +201,19 @@ client.loop_stop()
 
 
 
+# Paho-mqtt python client objects:
+
+    The main component of the paho python mqtt client library is the #client class
+    The client class provide all the necessary function to connect to an mqtt broker, publish  message, subscribe message to topics and receive Messages
+
+# To use you will need to create a new client object from the client class 
+
+Client(client_id="", clean_session=True, userdata=None, protocol=MQTTv311, transport="tcp")
+
+# client object creating:
+import paho.mqtt.client as mqtt
+
+broker = "localhost"
+sohan = mqtt.Client(client_id="1", clean_session=True, userdata=None, transport="tcp")
+
+sohan.connect(broker)
