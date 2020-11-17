@@ -7,7 +7,7 @@ def on_connect(client, userdata, flags, rc):
 		print("Connected OK")
 	else:
 		print("Bad connection  return code = ", rc)
-broker = "localhost"
+broker = "
 
 client = mqtt.Client()
 client.on_connect = on_connect

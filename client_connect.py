@@ -123,7 +123,8 @@ def on_message(client, userdata, message):
     print("Publshed message is: ", str(message.payload.decoode()))
 
 mqtt.Client.connected_flag = False
-broker = "192.168.1.103"
+broker = "192.168.0.104"
+port = 1883
 client = mqtt.Client("Room-4")
 client.on_log = on_log
 client.on_connect = on_connect
@@ -133,7 +134,7 @@ print("Connecting to the broker: ", broker)
 
 client.loop_start()
 try:
-    client.connect(broker)
+    client.connect(broker,port)
     while not client.connected_flag:
         print("In wait loop")
         time.sleep(1)

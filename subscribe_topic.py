@@ -45,6 +45,7 @@ sohan.on_disconnect = on_disconnect
 sohan.on_publish = on_publish
 sohan.on_subscribe = on_subscribe
 sohan.on_message = on_message
+sohan.username_pw_set(username="sohan", password="1234")
 
 topics = [("room/light/bulb1",0), ("room/light/bulb2",1)]
 
