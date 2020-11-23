@@ -67,14 +67,17 @@ sohan.on_disconnect = on_disconnect
 print("Connecting to the broker:",broker,"on port:",port)
 sohan.connect(broker,port)
 
-sohan.loop_start()
-print("Subscribing to : ",topic)
-sohan.subscribe(topic)
-time.sleep(4)
-print("Publishing to :", topic)
-sohan.publish(topic,"ON")
-time.sleep(4)
-sohan.loop_stop()
+for i in range(5):
+
+    sohan.loop_start()
+    print("Subscribing to : ",topic)
+    sohan.subscribe(topic)
+    time.sleep(4)
+    print("Publishing to :", topic)
+    sohan.publish(topic,"ON",1)
+    time.sleep(4)
+    sohan.loop_stop()
+
 sohan.disconnect()
 
 
