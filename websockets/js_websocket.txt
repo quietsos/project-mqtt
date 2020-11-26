@@ -1,0 +1,10 @@
+nodejs on server configuration:
+1. creating a new folder where to install node serverr.
+2. command:
+	1. install node
+	2. install npm
+Command for staring node server:
+ 1. npm init
+ 2. creating a js file for controling server.
+ 3. npm install ws
+

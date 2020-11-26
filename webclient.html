@@ -63,8 +63,8 @@
         </script>
     </body>
 </html> -->
-
-
+<!-- 
+****************script-2*************
 
 <html>
     <head>
@@ -110,6 +110,74 @@
 
     <body>
         <h1>I am in main body section</h1>
+        <script>
+            MQTTconnect();
+        </script>
+    </body>
+</html> -->
+
+
+
+<!-- ****************script-3************* -->
+
+<html>
+    <head>
+        <title> MQTT Websocket Example</title>
+      
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js">
+        </script>
+         <script type="text/javascript" language="javascript">
+
+            var rango;
+            var reconnectTimeout = 2000;
+            var host = "192.168.0.102";
+            var port = 9001;
+            
+
+
+
+            function onFailure(message){
+                console.log("Connection Attemp to Host " + host + "Failed.");    //onfailure callback function if the connection is not established properly
+                setTimeout(MQTTconnect,reconnectTimeout);   //setting up the time of trying reconnecting to the broker.
+
+            }
+
+            function onMessageArrived(msg){
+                out_msg = "Message Received: " + msg.payloadString + "<br>";   //retain messge from the broker using payload 
+                out_msg = out_msg + " Message received topic: " + msg.destinationName;  
+                console.log(out_msg);
+            } 
+           
+            function onConnect(){
+                console.log("Connected.."); //writting in the log conformation of established connection
+                rango.subscribe("lab"); //subscribing the topic lab
+                message = new Paho.MQTT.Message("Hello funcking broker.");  //creating object for message
+                message.destinationName = "lab"; //define the destination of the message object
+                rango.send(message) //publish message
+
+            }
+            function MQTTconnect(){
+               console.log("Connecting to the host:" + host + " port: " + port)
+               rango = new Paho.MQTT.Client(host,port,"clientjs") //creating client instance
+               
+               var options = {   // define all the parameter to connect to the broker username and password
+                   timeout:3,
+                   userName: "sohan",
+                   password: "1234",
+                   onSuccess: onConnect,  //calling the callback function
+                   onFailure: onFailure,  //calling on failure callback function
+               };
+               rango.onMessageArrived = onMessageArrived  //calling the message retain function where to publish and subscribe message on a particular topic
+               rango.connect(options); //connecting to the broker using object variable
+            }
+
+            </script>
+        
+    </head>
+
+    <body bgcolor="ocenblue">
+        <div style="background-color:brown; height: 150px; border-radius: 10px; width: 200px; padding: 20px; margin: 20px;"><h1>I am in main body section</h1></div>
+        
         <script>
             MQTTconnect();
         </script>

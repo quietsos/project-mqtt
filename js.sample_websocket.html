@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>MQTT websocket sample test</title>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js">
+        </script>
+        
+        <script type="text/javascript" language="javascript">
+            var host = "192.168.0.102";
+            var port = 9001;
+
+
+            var sohan = new Paho.MQTT.Client(host,port,"lab"); //creating client instance
+
+                //set callback handlers
+            sohan.onConnectionLost = onConnectionLost;
+            sohan.onMessageArrived = onMessageArrived;
+
+          
+
+
+                //called this function when the client is connected
+            function onConnect(){
+                console.log("onConnected");
+                sohan.subscribe("World");
+                message = new Paho.MQTT.Message("Hello");
+                message.destinationName = "World";
+                sohan.send(message);
+            }
+
+
+                //called when the client loses its connection
+            function onConnectionLost(){
+                if(resposeObject.errorcode !== 0){
+                    console.log("onConnectionLost"+ resposeObject.errorMessage);
+
+                }
+
+            }
+
+            function onMessageArrived(msg){
+                console.log("onMessageArrived: " + msg.payloadString);
+            }
+
+                //client connection
+            sohan.connect({
+                userName: "sohan",
+                password: "1234",
+                onSuccess: onConnect, 
+            });
+
+
+            
+        </script>
+    </head>
+    <body>
+    <h1>This is main body</h1>
+
+    </body>
+</html>

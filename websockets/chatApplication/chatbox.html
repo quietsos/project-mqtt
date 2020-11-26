@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbox</title>
+
+    <style>
+        div#show {
+            width: 800px;
+            height: 300px;
+            margin: 0 auto;
+            border: 5px solid black;
+            border-radius: 7px;
+        }
+        
+        div#sendCtrl {
+            width: 250px;
+            margin: 30px auto;
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+        <h1>Welcome to my chatbox.</h1>
+    </div>
+
+</div>
+
+
+<div id="show">
+
+</div>
+
+<div id="sendCtrl">
+    <input id="text" type="text" placeholder="Your message here">
+    <button>Send</button>
+</div>
+
+    
+
+
+    <script>
+
+        var name = prompt("Enter your name: ");
+
+
+        var mysock = new WebSocket("ws://localhost:5001");
+
+        mysock.onopen = function(){
+            mysock.send(JSON.stringify({
+                type: "name",
+                data: name
+
+            }));
+        }
+
+
+        var show = document.getElementById('show');
+
+
+            mysock.onopen = function(event){
+                // alert("Socket connection successfully.");
+            };
+
+
+            mysock.onmessage = function(event){
+                console.log(event);
+                var msg = JSON.parse(event.data);
+
+                show.innerHTML += msg.name + " : " + msg.data +"<br>";
+            };
+
+
+            document.querySelector('button').onclick = function(){
+                text = document.getElementById('text').value;
+
+                mysock.send(JSON.stringify({
+                     type: "message",
+                     data: text 
+                }));
+
+                show.innerHTML += "You: "+ text + "<br>";
+                // mysock.send(text)
+            }
+        
+    </script>
+</body>
+
+</html>
